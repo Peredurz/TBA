@@ -60,7 +60,7 @@ class game:
         print("FIGHT: to fight a monster")
         print("TALK: to talk to a character")
         print("PICKUP: to pick up an item")
-        print("DROP: to drop an item")
+        print("EQUIP: to equip an item")
         print("USE: to use an item")
         print("SAVE: to save the game")
         print("EXIT: to exit the game")
