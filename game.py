@@ -60,7 +60,7 @@ class game:
         print("FIGHT: to fight a monster")
         print("TALK: to talk to a character")
         print("PICKUP: to pick up an item")
-        print("EQUIP: to equip an item")
+        print("EQUIP: to equip an ite")
         print("USE: to use an item")
         print("SAVE: to save the game")
         print("EXIT: to exit the game")
@@ -122,6 +122,17 @@ class game:
             elif command.lower() == "equip shoes":
                     data["Character"]["Shoes"] = 1
                     game.WriteJson(data)
+            elif command.lower() == "check painting":
+                print("You notice that there is a lever, you can pull it.")
+            elif command.lower() == "pull lever":
+                print("Pulling the lever opens a secret room.")
+                #functie aanroepen voor die subroom
+            elif command.lower() == "check fridge":
+                print("You check the fridge and find some nice food to take with you on the journey.")
+                data["Inventory"]["Bread"] = 1
+                data["Inventory"]["Water"] = 4
+                data["Inventory"]["Meat"] = 3
+                game.WriteJson(data)
             else:
                 print("Please enter a valid command")
             
