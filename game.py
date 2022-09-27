@@ -28,13 +28,34 @@ class game:
         result = '\n'.join(f'{key}: {value}' for key, value in data["Character"].items())
         print(result)
 
-    PrintInventory(data)
 
-    PrintCharacter(data)
+    def start(data):
+        goed = False
+        begin = input("Do you want to start the game or resume with the latest save?")
+        while goed:
+            if begin == "start":
+                #reset json file to default values
+                data["Character"]["hp"] = 100
+                data.fromkeys(data["Inventory"],0)#reset de json file (kan je denk beter doen door de file weer leeg te overwriten aangezien je nu ook charachter en Inventory weghaald)
+                data.fromkeys(data["Character"],100)#zou dit werken denk je? denk het wel
+                game.WriteJson(data)#doe is een normale debug, gwn f5
+                goed = True
+            #reset json data
+            elif begin == "resume":
+                goed = True
+                pass
+            else:
+                print("Please enter start or resume")
+        
+            
+
+    #PrintInventory(data)
+
+    #PrintCharacter(data)
     
-    data["Character"]["hp"] = 100
+    #data["Character"]["hp"] = 100
     
     WriteJson(data)
     
 
-game()
+game.start(game.data)

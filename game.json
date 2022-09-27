@@ -1,7 +1,7 @@
 {
   "Character": {
     "hp": 100,
-    "food": 100
+    "food": 1
   },
   "Inventory": {
     "GoldCoins": 0,
@@ -11,7 +11,7 @@
     "Vlees": 0,
     "DriedMeat": 0,
     "Water": 0,
-    "Wood": 0,
+    "Wood": 1,
     "gay": 0
   }
 }
