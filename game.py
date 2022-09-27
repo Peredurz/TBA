@@ -31,7 +31,9 @@ class game:
     PrintInventory(data)
 
     PrintCharacter(data)
+    
     data["Character"]["hp"] = 100
+    
     WriteJson(data)
     
 
