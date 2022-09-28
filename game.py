@@ -179,7 +179,7 @@ class game:
             else:
                 command = input(colored("\nType a valid command... ","green"))
                 
-       #DOUWE: hier moet je even kijken of dit zou werken, of dat data dan opeen gek doet. 
+        
         if data["Inventory"]["WinterClothes"] == 0 or data["Inventory"]["Shoes"] == 0:
              print("It is cold outside, check if you can find some clothing and shoes.")
              game.room1(data)
