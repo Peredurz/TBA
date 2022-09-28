@@ -5,6 +5,7 @@
     "WinterClothes": 0,
     "Shoes": 0
   },
+
   "Inventory": {
     "GoldCoins": 0,
     "SilverCoins": 0,
@@ -16,5 +17,7 @@
     "Wood": 0,
     "WinterClothes": 0,
     "Shoes": 0
-  }
+  },
+
+  "Room": 2
 }

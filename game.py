@@ -40,6 +40,8 @@ class game:
         
         for  value in dict(data["Inventory"].items()):
             data["Inventory"][value] = 0
+            
+        data["Room"] = 0
                   
         game.WriteJson(data)
     
@@ -72,16 +74,28 @@ class game:
             
         if begin == "start":
             game.reset(data)
-            
+            game.Pre_Game_Story(data)
             #reset json data
         else:
             #Uiteindelijk de juiste ruimte aanroepen dat in de json file is opgeslagen
-            print("resuming game")
+            print(f"resuming game in room {data['Room']}")
             print("This is the inventory u saved: ")
             game.PrintInventory(data)
             
+            if data["Room"] == 1:
+                game.room1(data)
+            elif data["Room"] == 2:
+                game.room2(data)
+            elif data["Room"] == 3:
+                game.room3(data)
+            elif data["Room"] == 4:
+                game.room4(data)
+            elif data["Room"] == 5:
+                game.room5(data)
+            
+            
           
-        game.Pre_Game_Story(data)
+        
     
     def Pre_Game_Story(data):
         print(colored("You can write different commands to look around the room (Write HELP for more info WHEN ASKED FOR A COMMAND)...","red",attrs=['bold','underline']))	
@@ -91,7 +105,8 @@ class game:
         game.room1(data)
     
     def room1(data):
-        
+        data["Room"] = 1
+        game.WriteJson(data)
         command = input(colored("\nType a valid command... ","green"))
         while command.lower() != "go door":
             
@@ -152,21 +167,34 @@ class game:
              game.room1(data)
              
         else:
+            print("\nYou go through the door and find yourself in a forest.")
             game.room2(data)
             
         #pass
     def room2(data):
         print("You are in the room 2")
-        pass
+        data["Room"] = 2
+        game.WriteJson(data)
+        
     
     def room3(data):
-        pass
+        data["Room"] = 3
+        game.WriteJson(data)
+        
     
     def room4(data):
-        pass
+        data["Room"] = 4
+        game.WriteJson(data)
+        
     
     def room5(data):
-        pass
+        data["Room"] = 5
+        game.WriteJson(data)
+        
+    
+    
+    
+    
     #PrintInventory(data)
 
     #PrintCharacter(data)
