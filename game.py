@@ -29,26 +29,20 @@ class game:
         print(result)
 
     def reset(data):
-        data["Character"]["hp"] = 100
-        data["Character"]["food"] = 100
-        data["Character"]["WinterClothes"] = 0
-        data["Character"]["Shoes"] = 0
-
-        data["Inventory"]["GoldCoins"] = 0
-        data["Inventory"]["SilverCoins"] = 0
-        data["Inventory"]["BronzeCoins"] = 0
-        data["Inventory"]["Bread"] = 0
-        data["Inventory"]["Meat"] = 0
-        data["Inventory"]["DriedMeat"] = 0	
-        data["Inventory"]["Water"] = 0
-        data["Inventory"]["Wood"] = 0
-        data["Inventory"]["gay"] = 0
-        data["Inventory"]["WinterClothes"] = 0
-        data["Inventory"]["Shoes"] = 0
+        #Run a for loop over each key in the json file and set it to 0 if that is the desired value
+        for  value in dict(data["Character"].items()):
+            if value == "hp" or value == "food":
+                data["Character"][value] = 100
+            else:
+                data["Character"][value] = 0
+        
+        for  value in dict(data["Inventory"].items()):
+            data["Inventory"][value] = 0
+                  
         game.WriteJson(data)
     
     def help():
-        print("HELP")
+        print("HELP: \n")
         print("You can write different commands to look around the room")
         print("You can write the following commands: ")
         print("INVENTORY: to see your inventory")
@@ -68,23 +62,27 @@ class game:
         print("")
 
     def start(data):
-        goed = False
+        
         begin = input("Do you want to start the game or resume with the latest save?")
-        while goed == False:
-            if begin == "start":
-                game.reset(data)
-                goed = True
+        while begin != "start" and begin != "resume":
+            print("Please enter start or resume")
+            begin = input("Do you want to start the game or resume with the latest save?")
+            
+        if begin == "start":
+            game.reset(data)
+            
             #reset json data
-            elif begin == "resume":
-                #Uiteindelijk de juiste ruimte aanroepen dat in de json file is opgeslagen
-                goed = True
-                pass
-            else:
-                print("Please enter start or resume")
+        else:
+            #Uiteindelijk de juiste ruimte aanroepen dat in de json file is opgeslagen
+            print("resuming game")
+            print("This is the inventory u saved: ")
+            game.PrintInventory(data)
+            
+          
         game.room1(data)
     
     def room1(data):
-        print("You suddenly wake up with the worst headache you have ever had.")
+        print("\nYou suddenly wake up with the worst headache you have ever had.")
         print("You don't know where you are and you don't know how you got here.")
         print("You only know that you want to climb the mountain and slay the boss.")
         
