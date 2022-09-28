@@ -321,7 +321,7 @@ class game:
                 exit()
 
             else:
-                pass#command = input(colored("\nType a valid command... ","green"))
+                pass
             command = input(colored("\nType a valid command... ","green"))
         game.room3(data)
 
