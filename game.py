@@ -1,5 +1,7 @@
 import json
 import time
+from termcolor import colored
+#https://pypi.org/project/termcolor/ voor meer kleur en text info
 
 class game:
     #print(data["Character"]["hp"]) als we iets uit de jsonfile uit willen printen
@@ -63,10 +65,10 @@ class game:
 
     def start(data):
         
-        begin = input("Do you want to start the game or resume with the latest save?")
+        begin = input("Do you want to start the game or resume with the latest save? ")
         while begin != "start" and begin != "resume":
-            print("Please enter start or resume")
-            begin = input("Do you want to start the game or resume with the latest save?")
+            print(colored("Please enter start or resume","red"))	
+            begin = input("Do you want to start the game or resume with the latest save? ")
             
         if begin == "start":
             game.reset(data)
@@ -82,17 +84,16 @@ class game:
         game.Pre_Game_Story(data)
     
     def Pre_Game_Story(data):
+        print(colored("You can write different commands to look around the room (Write HELP for more info WHEN ASKED FOR A COMMAND)...","red",attrs=['bold','underline']))	
         print("\nYou suddenly wake up with the worst headache you have ever had.")
         print("You don't know where you are and you don't know how you got here.")
-        print("You only know that you want to climb the mountain and slay the boss.\n")
+        print("You only know that you want to climb the mountain and slay the boss.")
         game.room1(data)
     
     def room1(data):
         
-        print("You can write different commands to look around the room (Write HELP for more info)...")
-        command = input("\nType a command...")
+        command = input(colored("\nType a valid command... ","green"))
         while command.lower() != "go door":
-            
             
             if command.lower() == "help":
                 game.help()
@@ -143,11 +144,12 @@ class game:
                 command = ""
                 
             else:
-                command = input("\nType a valid command... ")
+                command = input(colored("\nType a valid command... ","green"))
                 
         
         if data["Inventory"]["WinterClothes"] == 0 or data["Inventory"]["Shoes"] == 0:
              print("It is cold outside, check if you can find some clothing and shoes.")
+             game.room1(data)
              
         else:
             game.room2(data)
