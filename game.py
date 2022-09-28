@@ -84,6 +84,7 @@ class game:
             
             if data["Room"] == 0:
                 print(colored("No savegame, starting new game","red"))
+                game.reset(data)
                 game.Pre_Game_Story(data)
             elif data["Room"] == 1:
                 game.room1(data)
@@ -162,11 +163,14 @@ class game:
                 command = ""
                 
             elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
                 game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
                 command = ""
             
             elif command.lower() == "exit":
-                print("Exiting game...")
+                print(colored("Exiting game...","red"))
                 exit()
        
             else:

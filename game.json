@@ -5,19 +5,17 @@
     "WinterClothes": 0,
     "Shoes": 0
   },
-
   "Inventory": {
     "GoldCoins": 0,
     "SilverCoins": 0,
     "BronzeCoins": 0,
-    "Bread": 0,
-    "Meat": 0,
+    "Bread": 1,
+    "Meat": 3,
     "DriedMeat": 0,
-    "Water": 0,
+    "Water": 4,
     "Wood": 0,
     "WinterClothes": 0,
     "Shoes": 0
   },
-
-  "Room": 2
+  "Room": 1
 }
