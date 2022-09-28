@@ -46,6 +46,20 @@ class game:
                   
         game.WriteJson(data)
 
+    def equip(info, data):
+        file = open("game.json", "r")
+        items = json.load(file)
+        e = info
+        for item in items:
+            if "Inventory" in item:
+                for item2 in items["Inventory"]:
+                    if info in item2:
+                        data["Character"][e] = 1
+                        data["Inventory"][e] = 0
+                        print("You have equipped the", e)
+                        game.WriteJson(data)
+        
+
     def help():
         print("HELP: \n")
         print("You can write different commands to look around the room")
@@ -292,20 +306,7 @@ class game:
                 command = ""
             
             elif command2[0] == "equip":
-                file = open("game.json", "r")
-                items = json.load(file)
-                e = command2[1]
-                for item in items:
-                    if "Inventory" in item:
-                        for item2 in items["Inventory"]:
-                            if e in item2:
-                                data["Character"][e] = 1
-                                data["Inventory"][e] = 0
-                                print("You have equipped the", e)
-                                game.WriteJson(data)
-                                command = ""
-                #info.close()
-                #check if command[2] is in nested list data["Inventory"] from jsonfile
+                game.equip(command2[1], data)
                 command = ""
 
             elif command.lower() == "save":
