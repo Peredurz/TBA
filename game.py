@@ -82,7 +82,10 @@ class game:
             print("This is the inventory u saved: ")
             game.PrintInventory(data)
             
-            if data["Room"] == 1:
+            if data["Room"] == 0:
+                print(colored("No savegame, starting new game","red"))
+                game.Pre_Game_Story(data)
+            elif data["Room"] == 1:
                 game.room1(data)
             elif data["Room"] == 2:
                 game.room2(data)
@@ -158,6 +161,14 @@ class game:
                 game.WriteJson(data)
                 command = ""
                 
+            elif command.lower() == "save":
+                game.WriteJson(data)
+                command = ""
+            
+            elif command.lower() == "exit":
+                print("Exiting game...")
+                exit()
+       
             else:
                 command = input(colored("\nType a valid command... ","green"))
                 
