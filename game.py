@@ -1,6 +1,7 @@
 import json
 import time
 from termcolor import colored
+import random
 #https://pypi.org/project/termcolor/ voor meer kleur en text info
 
 class game:
@@ -44,7 +45,7 @@ class game:
         data["Room"] = 0
                   
         game.WriteJson(data)
-    
+
     def help():
         print("HELP: \n")
         print("You can write different commands to look around the room")
@@ -92,6 +93,8 @@ class game:
                 game.room2(data)
             elif data["Room"] == 3:
                 game.room3(data)
+            elif data["Room"] == 3.5:
+                game.subroom3(data)
             elif data["Room"] == 4:
                 game.room4(data)
             elif data["Room"] == 5:
@@ -195,8 +198,132 @@ class game:
     def room3(data):
         data["Room"] = 3
         game.WriteJson(data)
-        
-    
+        print("\nYou have walked down a path away from the garden from the cabin that you woke up in and notice that you have arrived at a steep stone cliff.")
+        #time.sleep(5)
+        print("You feel that you are strong enough to climb up this cliff. Because it seems that it is only ten meters tall.")
+        #time.sleep(5)
+        command = input(colored("\nType a valid command... ", "green"))
+        while command != "go pathway":
+
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("\nYou look around to see if you can find something that you can work with.")
+                #if(random.randint(0,100) > 30):
+                print("You luckily notice that there is a crack in the wall.")
+                print("The wall before you just seems like it got a little taller.")
+                print("But it does not seem impossible to climb")
+                command = ""
+            
+            elif command.lower() == "check crack":
+                print("\nYou check the crack that you have previously seen when taking a look around.\n"
+                "And you notice that it is just big enough for your body to go through.\n")
+                command = ""
+            
+            elif command.lower() == "go crack":
+                print("\nYou manage to squeeze yourself through the crack.")
+                game.subroom3(data)
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+            
+            elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
+                game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\nType a valid command... ","green"))
+
+    def subroom3(data):
+        data["Room"] = 3.5
+        game.WriteJson(data)
+        print("\nYou have entered a subroom of stage 3.")
+        command = input(colored("\nType a valid command... ","green"))
+        while command != "go crack":
+            command2 = command.split()
+            command2[0] = command2[0].lower()
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""   
+
+            elif command.lower() == "look":
+                print("You look around the dimly lit cave to see a skeleton leaning against the wall.")
+                command = ""
+
+            elif command.lower() ==  "check skeleton":
+                print("Upon checking the skeleton you find a small bag containing 200 bronze coins.")
+                print("You also find a rusty old sword and an old helmet.\n")
+                data["Inventory"]["RustySword"] = 1
+                data["Inventory"]["BronzeCoins"] += 200
+                data["Inventory"]["OldHelmet"] = 1
+                game.WriteJson(data)
+                command = ""
+            
+            elif command.lower() == "go crack":
+                print("You are leaving the small cave")
+                command = ""
+            
+            elif command2[0] == "equip":
+                file = open("game.json", "r")
+                items = json.load(file)
+                e = command2[1]
+                for item in items:
+                    if "Inventory" in item:
+                        for item2 in items["Inventory"]:
+                            if e in item2:
+                                data["Character"][e] = 1
+                                data["Inventory"][e] = 0
+                                print("You have equipped the", e)
+                                game.WriteJson(data)
+                                command = ""
+                #info.close()
+                #check if command[2] is in nested list data["Inventory"] from jsonfile
+                command = ""
+
+            elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
+                game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                pass#command = input(colored("\nType a valid command... ","green"))
+            command = input(colored("\nType a valid command... ","green"))
+        game.room3(data)
+
     def room4(data):
         data["Room"] = 4
         game.WriteJson(data)
@@ -222,3 +349,6 @@ class game:
 
 
 game.start(game.data)
+
+
+#16 panelen 1 naast raam 1 bovenaan

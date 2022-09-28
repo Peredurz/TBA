@@ -2,20 +2,23 @@
   "Character": {
     "hp": 100,
     "food": 100,
-    "WinterClothes": 0,
-    "Shoes": 0
+    "WinterClothes": 1,
+    "Shoes": 1
   },
   "Inventory": {
     "GoldCoins": 0,
     "SilverCoins": 0,
-    "BronzeCoins": 0,
+    "BronzeCoins": 200,
     "Bread": 1,
     "Meat": 3,
     "DriedMeat": 0,
     "Water": 4,
     "Wood": 0,
     "WinterClothes": 0,
-    "Shoes": 0
+    "Shoes": 0,
+    "RustySword": 1,
+    "OldHelmet": 1,
+    "u": 0
   },
-  "Room": 1
+  "Room": 3.5
 }
