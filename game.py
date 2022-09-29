@@ -205,8 +205,9 @@ class game:
                 command = ""
                 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -266,8 +267,9 @@ class game:
                 command = ""
                 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -342,8 +344,9 @@ class game:
                 
                 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -423,8 +426,9 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -479,8 +483,9 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -548,8 +553,9 @@ class game:
                 print("\nYou leave the village and start walking to the watchtower.")
 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -633,8 +639,9 @@ class game:
                 command = ""
             
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -689,8 +696,9 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
@@ -768,8 +776,9 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                game.save(data)
                 command = ""
+                game.save(data)
+                
             
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
