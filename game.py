@@ -85,6 +85,16 @@ class game:
             game.subroom5_2(data)
         elif data["Room"] == 5.3:
             game.subroom5_3(data)
+        elif data["Room"] == 6:
+            game.room6(data)
+        elif data["Room"] == 7:
+            game.room7(data)
+        elif data["Room"] == 8:
+            game.room8(data)
+        elif data["Room"] == 9:
+            game.room9(data)
+        elif data["Room"] == 10:
+            game.room10(data)
                         
     def save(data):
         print(colored("\nSaving game...", "red"))
@@ -802,9 +812,14 @@ class game:
     def room7(data):
         data["Room"] = 7
         game.WriteJson(data)
-        print("You suddenly arrive at a big canyon.")
+        print("You suddenly arrive at a big canyon. With a big pedestal in front of you.")
         command = input(colored("\n Type a valid command... ", "green"))
         raadsel = False
+        morse =  {'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
+                    'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
+                    'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+                    'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+                    '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.'}
         while raadsel == False:
             if command.lower() == "help":
                 game.help()
@@ -817,11 +832,31 @@ class game:
             elif command.lower() == "character":
                 game.PrintCharacter(data)
                 command = ""
+
+            elif command.lower() == "check pedestal":
+                print("It seems that you should look for clues in your surrounding area to write the correct sentence.")
+                print("A bridge to the other side of the canyon will appear when you write the correct sentence.")
+                command = ""
+
+            elif command.lower() == "look":
+                print("You also see the pedestal infront of you")
+                print("Looking around you, you see a big stone with some weird writing on it.")
+                print("There is also this weird looking tree.")
+                command = ""
+            
+            elif command.lower() == "checkout tree":
+                print(morse)
+                command = ""
+
+            elif command.lower() == "checkout boulder":
+                print("")
+                command = ""
             
             elif command.__contains__("equip") or command.__contains__("EQUIP"):
                 command2 = command.split()
                 game.equip(command2[1], data)
                 command = ""
+            
 
             elif command.lower() == "save":
                 command = ""
