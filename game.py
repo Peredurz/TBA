@@ -34,7 +34,7 @@ class game:
     def reset(data):
         #Run a for loop over each key in the json file and set it to 0 if that is the desired value
         for  value in dict(data["Character"].items()):
-            if value == "hp" or value == "food":
+            if value == "Hp" or value == "Food":
                 data["Character"][value] = 100
             else:
                 data["Character"][value] = 0
@@ -113,6 +113,12 @@ class game:
                 game.room4(data)
             elif data["Room"] == 5:
                 game.room5(data)
+            elif data["Room"] == 5.1:
+                game.subroom5_1(data)
+            elif data["Room"] == 5.2:
+                game.subroom5_2(data)
+            elif data["Room"] == 5.3:
+                game.subroom5_3(data)
             
             
           
@@ -164,6 +170,11 @@ class game:
                     
             elif command.lower() == "check painting":
                 print("\nYou notice that there is a lever, you can pull it.")
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
                 command = ""
                 
             elif command.lower() == "pull lever":
@@ -217,7 +228,7 @@ class game:
         print("You feel that you are strong enough to climb up this cliff. Because it seems that it is only ten meters tall.")
         #time.sleep(5)
         command = input(colored("\nType a valid command... ", "green"))
-        while command != "go pathway":
+        while command != "go wall":
 
             if command.lower() == "help":
                 game.help()
@@ -239,6 +250,12 @@ class game:
                 print("But it does not seem impossible to climb")
                 command = ""
             
+            elif command.lower() == "go wall":
+                print("\n You walk to the large wall which is only ten meters high.")
+                print("You have the confidence to conquer this wall because it is not that tall.")
+                print("So you swiftly make your way to the top.\n")
+                command = ""
+
             elif command.lower() == "check crack":
                 print("\nYou check the crack that you have previously seen when taking a look around.\n"
                 "And you notice that it is just big enough for your body to go through.\n")
@@ -249,6 +266,15 @@ class game:
                 game.subroom3(data)
                 command = ""
             
+            elif command.lower() == "go pathway":
+                game.room2(data)
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
                 exit()
@@ -266,6 +292,8 @@ class game:
 
             else:
                 command = input(colored("\nType a valid command... ","green"))
+        game.room4(data)
+        
 
     def subroom3(data):
         data["Room"] = 3.5
@@ -274,7 +302,6 @@ class game:
         command = input(colored("\nType a valid command... ","green"))
         while command != "go crack":
             command2 = command.split()
-            command2[0] = command2[0].lower()
             
             if command.lower() == "help":
                 game.help()
@@ -290,6 +317,7 @@ class game:
 
             elif command.lower() == "look":
                 print("You look around the dimly lit cave to see a skeleton leaning against the wall.")
+                print("Behind you is the crack where you came through.")
                 command = ""
 
             elif command.lower() ==  "check skeleton":
@@ -305,7 +333,8 @@ class game:
                 print("You are leaving the small cave")
                 command = ""
             
-            elif command2[0] == "equip":
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
                 game.equip(command2[1], data)
                 command = ""
 
@@ -321,8 +350,8 @@ class game:
                 exit()
 
             else:
-                pass
-            command = input(colored("\nType a valid command... ","green"))
+                command = input(colored("\nType a valid command... ","green"))
+        print("You are leaving the small cave")
         game.room3(data)
 
     def room4(data):
@@ -333,7 +362,318 @@ class game:
     def room5(data):
         data["Room"] = 5
         game.WriteJson(data)
-        
+        print("\nYou have arrived in the miners town of Miners Vale.")
+        command = input(colored("\n Type a valid command... ", "green"))
+        while command != "go Watchtower":
+            command2 = command.split()
+            command2[0] = command2[0].lower()
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("\nYou take a look around the small miners town and see three handy building.")
+                print("The three buildings that are open right now are the tavern, the hotel and the store.")
+                print("At the tavern you can have a nice drink for a cheap price and talk with the locals.")
+                print("The hotel is obviously for sleeping and you can buy useful items at the store.")
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+            
+            elif command.lower() == "go tavern":
+                print("\nYou walk over to the tavern to check it out.")
+                game.subroom5_1(data)
+                command = ""
+
+            elif command.lower() == "go hotel":
+                print("\nYou walk over to the hotel to check if they have a cheap room available for you.")
+                game.subroom5_2(data)
+                command = ""
+
+            elif command.lower() == "go store":
+                print("\nYou walk over to the tavern to check if they have useful items that you can buy for your climb and fight with the evil monsters.")
+                game.subroom5_3(data)
+                command = ""
+            
+            elif command.lower() == "go Watchtower":
+                print("\nYou leave the village and start walking to the watchtower.")
+
+            elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
+                game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\n Type a valid command... ", "green"))
+
+        print("\nYou leave the village and start walking to the watchtower.")
+        game.room6(data)
+
+    def subroom5_1(data):
+        data["Room"] = 5.1
+        game.WriteJson(data)
+        print("\nYou arrived in the tavern where you can eat and drink and maybe gather some useful information.")
+        command = input(colored("\n Type a valid command... ", "green"))
+        while command != "leave tavern":
+
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("\nYou see two people whilst looking through the tavern.")
+                print("One is the bartender and the other is a guest.")
+                print("Watch out for the guest thoug, because you have a small chance to end up in a fight")
+                command = ""
+            
+            elif command.lower() == "talk guest":
+                print("The guest asks you are you an adventurer, where you answer yes.")
+                print("He says to you in an ominous voice: 'Don't climb the mountain, it is dangerous and filled with strong monsters.'")
+                print("'If you still plan to go then you need to check out the old watchtower, it is said to contain some nice loot.'")
+                print("You thank the guest and go back to your own table")
+                command = ""
+
+            elif command.lower() == "talk bartender":
+                print("You go talk with the bartender and says that you can buy a meal or a beer. For 100 bronze each")
+                print("He asks if you'd like to have something.")
+                command = ""
+            
+            elif command.lower() == "buy beer":
+                if (data["Inventory"]["BronzeCoins"] - 100) < 0:
+                    print("Insufficient funds")
+                    command = ""
+                else: 
+                    print("You bought a nice beer for 100 bronzecoins and feel your saturation going up.")
+                    data["Character"]["Food"] += 20
+                    data["Inventory"]["BronzeCoins"] -= 100
+                    time.sleep(2)
+                    print("Food went up by 20")
+                    left = data["Inventory"]["BronzeCoins"]
+                    game.WriteJson(data)
+                    print(f"You have {left} BronzeCoins left")
+                command = ""
+
+            elif command.lower() == "buy food":
+                if (data["Inventory"]["BronzeCoins"] - 100) < 0:
+                    print("Insufficient funds")
+                else: 
+                    print("You bought yourself a nice and hot meal for 100 bronze and fill yourselves.")
+                    data["Character"]["Food"] += 30
+                    data["Inventory"]["BronzeCoins"] -= 100
+                    time.sleep(2)
+                    print("Food went up by 30")
+                    left = data["Inventory"]["BronzeCoins"]
+                    game.WriteJson(data)
+                    print(f"You have {left} BronzeCoins left")
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+            
+            elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
+                game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\n Type a valid command... ", "green"))
+        game.room5()
+
+    def subroom5_2(data):
+        data["Room"] = 5.2
+        game.WriteJson(data)
+        print("You enter the nice hotel to maybe spend the night.")
+        command = input(colored("\n Type a valid command... ", "green"))
+        while command != "leave hotel":
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("Looking around the hotel lobby you see the helpdesk where you can pay 1 silver to spend the night.")
+                command = ""
+            
+            elif command.lower() == "go helpdesk":
+                print("You walk up to the helpdesk and ask if there are any rooms available.")
+                print("The nice employee says yes and that a room for the night costs 1 silver.")
+                command = ""
+            
+            elif command.lower() == "buy room":
+                if (data["Inventory"]["BronzeCoins"] - 1000) < 0:
+                    print("Insufficient funds.")
+                else:
+                    print("You spend the night in a nice bed.")
+                    data["Inventory"]["BronzeCoins"] -= 1000
+                    left = data["Inventory"]["BronzeCoins"]
+                    game.WriteJson(data)
+                    print(f"You have {left} BronzeCoins left")
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+
+            elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
+                game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\n Type a valid command... ", "green"))
+        game.room5()
+
+    def subroom5_3(data):
+        data["Room"] = 5.3
+        game.WriteJson(data)
+        print("You enter the store to buy some supplies for your journey up the mountain.")
+        command = input(colored("\n Type a valid command... ", "green"))
+        while command != "leave store":
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("\nWhen you take a look around the store you notice that it only sells a large knife, \nbetter armor and an encyclopedia full of pictyres and monsters.")
+                print("The knife costs 300 BronzeCoins.")
+                print("The armor costs 400 BronzeCoins.")
+                print("The encyclopedia costs 500 BronzeCoins.")
+                command = ""
+            
+            elif command.lower() == "buy knife":
+                if (data["Inventory"]["BronzeCoins"] - 300) < 0:
+                    print("Insufficient funds.")
+                else:
+                    print("You bought the large knife and it has been added to your inventory.")
+                    data["Inventory"]["BronzeCoins"] -= 300
+                    left = data["Inventory"]["BronzeCoins"]
+                    data["Inventory"]["LargeKnife"] = 1
+                    game.WriteJson(data)
+                    print(f"You have {left} BronzeCoins left")
+                command = ""
+
+            elif command.lower() == "buy encylopedia":
+                if (data["Inventory"]["BronzeCoins"] - 500) < 0:
+                    print("Insufficient funds.")
+                else:
+                    print("You bought the encyclopedia and it has been added to your inventory.")
+                    data["Inventory"]["BronzeCoins"] -= 500
+                    left = data["Inventory"]["BronzeCoins"]
+                    data["Inventory"]["Encyclopedia"] = 1
+                    game.WriteJson(data)
+                    print(f"You have {left} BronzeCoins left")
+                command = ""
+            
+            elif command.lower() == "buy armor":
+                if (data["Inventory"]["BronzeCoins"] - 300) < 0:
+                    print("Insufficient funds.")
+                else:
+                    print("You bought the armor and it has been added to your inventory.")
+                    data["Inventory"]["BronzeCoins"] -= 300
+                    left = data["Inventory"]["BronzeCoins"]
+                    data["Invenory"]["Armor"] = 1
+                    game.WriteJson(data)
+                    print(f"You have {left} BronzeCoins left")
+                command = ""
+
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+
+            elif command.lower() == "save":
+                print(colored("\nSaving game...", "red"))
+                game.WriteJson(data)
+                time.sleep(0.5)
+                print(colored("\nSaved Game!", "red"))
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\n Type a valid command... ", "green"))
+        game.room5()
+
+    def room6(data):
+        data["Room"] = 6
+        game.WriteJson(data)
+
+    def room7(data):
+        data["Room"] = 7
+        game.WriteJson(data)
+
+    def room8(data):
+        data["Room"] = 8
+        game.WriteJson(data)
+
+    def room9(data):
+        data["Room"] = 9
+        game.WriteJson(data)
+
+    def room10(data):
+        data["Room"] = 10
+        game.WriteJson(data)
+
     
     
     
