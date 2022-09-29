@@ -2,6 +2,7 @@ import json
 import time
 from termcolor import colored
 import random
+from playsound import playsound
 #https://pypi.org/project/termcolor/ voor meer kleur en text info
 
 class game:
@@ -864,6 +865,7 @@ class game:
                 print("This boulder seems to have a message in some morse code.")
                 print("Maybe I can find a conversion table for it.")
                 print("--- .--. . -. / ... . ... .- -- .")
+                playsound('./' + 'morse.wav')
                 command = ""
             
             elif command.lower() == "checkout bushes":
