@@ -17,7 +17,9 @@
     "WinterClothes": 0,
     "Shoes": 0,
     "RustySword": 1,
-    "OldHelmet": 1
+    "OldHelmet": 1,
+    "ClimbingPicks": 1,
+    "Rope": 1
   },
   "Room": 5.3
 }

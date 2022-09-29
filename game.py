@@ -58,7 +58,42 @@ class game:
                         data["Inventory"][e] = 0
                         print("You have equipped the", e)
                         game.WriteJson(data)
+                        
+                        
+    def LoadRoom(data):
+        if data["Room"] == 0:
+            print(colored("No savegame, starting new game","red"))
+            game.reset(data)
+            game.Pre_Game_Story(data)
+        elif data["Room"] == 1:
+            game.room1(data)
+        elif data["Room"] == 2:
+            game.room2(data)
+        elif data["Room"] == 2.5:
+            game.subroom2(data)
+        elif data["Room"] == 3:
+            game.room3(data)
+        elif data["Room"] == 3.5:
+            game.subroom3(data)
+        elif data["Room"] == 4:
+            game.room4(data)
+        elif data["Room"] == 5:
+            game.room5(data)
+        elif data["Room"] == 5.1:
+            game.subroom5_1(data)
+        elif data["Room"] == 5.2:
+            game.subroom5_2(data)
+        elif data["Room"] == 5.3:
+            game.subroom5_3(data)
+                        
+    def save(data):
+        print(colored("\nSaving game...", "red"))
+        game.WriteJson(data)
+        time.sleep(0.5)
+        print(colored("\nSaved Game!", "red"))
+        game.LoadRoom(data)
         
+
 
     def help():
         print("HELP: \n")
@@ -97,28 +132,7 @@ class game:
             print("This is the inventory u saved: ")
             game.PrintInventory(data)
             
-            if data["Room"] == 0:
-                print(colored("No savegame, starting new game","red"))
-                game.reset(data)
-                game.Pre_Game_Story(data)
-            elif data["Room"] == 1:
-                game.room1(data)
-            elif data["Room"] == 2:
-                game.room2(data)
-            elif data["Room"] == 3:
-                game.room3(data)
-            elif data["Room"] == 3.5:
-                game.subroom3(data)
-            elif data["Room"] == 4:
-                game.room4(data)
-            elif data["Room"] == 5:
-                game.room5(data)
-            elif data["Room"] == 5.1:
-                game.subroom5_1(data)
-            elif data["Room"] == 5.2:
-                game.subroom5_2(data)
-            elif data["Room"] == 5.3:
-                game.subroom5_3(data)
+            game.LoadRoom(data)
             
             
           
@@ -191,10 +205,7 @@ class game:
                 command = ""
                 
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
@@ -210,21 +221,157 @@ class game:
              game.room1(data)
              
         else:
-            print("\nYou go through the door and find yourself in a forest.")
+            print("\nYou go through the door and find yourself in a opening in the forest.")
             game.room2(data)
             
-        #pass
+        
+        
+        
+        
+        
+        
     def room2(data):
-        print("You are in the room 2")
         data["Room"] = 2
         game.WriteJson(data)
+        command = input(colored("\nType a valid command... ","green"))
+        while command.lower() != "go path" or command.lower() != "go back":
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+                
+            elif command.lower() == "look":
+                print("\n.When you look around u can see a small shed.\n"
+                      "In the distance you see the opening to a path through the forest.")
+                command = ""
+                
+            elif command.lower() == "check Shed":
+                print("\nYou check the shed and find a piece of rope and a set of climbing picks.")
+                data["Inventory"]["WinterClothes"] = 1
+                game.WriteJson(data)
+                command = ""
+                
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+                
+            elif command.lower() == "save":
+                game.save(data)
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+       
+            else:
+                command = input(colored("\nType a valid command... ","green"))
         
+        if command.lower() == "go back":
+                print("\nU go back to where u came from.")
+                game.room1(data)
+                
+        
+        elif command.lower() == "go path":
+                print(colored("\nYou walk onto the path and stand infront of a decision, will you look around or go further... ","grey"))
+                game.subroom2(data)
+                
+        
+    
+    
+    def subroom2(data):
+        data["Room"] = 2.5
+        game.WriteJson(data)
+        	
+        command = input(colored("\nType a valid command... ","green"))
+        while command.lower() != "go further" or command.lower() != "go back":
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+                
+            elif command.lower() == "look":
+                print("\n.When you look around u can see that the path is encased in bushes and trees.\n"
+                      "Maybe you can find some herbs and wood to help you in your journey")
+                command = ""
+                
+            elif command.lower() == "check bushes":
+                print("\nYou check the bushes and find some wood and a maybe few weird herbs.")
+                data["Inventory"]["Wood"] += 3
+                BurkingBagCounter = int(random(1,100))
+                if BurkingBagCounter <= 50:
+                    data["Inventory"]["Herbs"] += 2
+                elif  BurkingBagCounter > 50 and BurkingBagCounter <= 75:
+                    data["Inventory"]["Herbs"] += 5
+                else:
+                    print("You find no herbs")	
+                
+                game.WriteJson(data)
+                command = ""
+                
+            elif command.lower() == "check bushes":
+                print("\nYou go to the wall and find some shoes which you stash in your inventory.\n"
+                    "You also see a weard painting.")
+                data["Inventory"]["Shoes"] = 1
+                game.WriteJson(data)
+                command = ""
+                    
+
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+                
+                
+            elif command.lower() == "save":
+                game.save(data)
+                command = ""
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+       
+            else:
+                command = input(colored("\nType a valid command... ","green"))
+        
+        if command.lower() == "go back":
+            print("\nU go back to where u came from.")
+            game.room2(data)
+                
+        
+        elif command.lower() == "go further":
+            print(colored("\nYou further on the path and eventually arrive at a steep stone cliff.... ","grey"))
+            game.room3(data)
+    
+    
+    
+    
+    
+    
+    
     
     def room3(data):
         data["Room"] = 3
         game.WriteJson(data)
-        print("\nYou have walked down a path away from the garden from the cabin that you woke up in and notice that you have arrived at a steep stone cliff.")
-        #time.sleep(5)
+
         print("You feel that you are strong enough to climb up this cliff. Because it seems that it is only ten meters tall.")
         #time.sleep(5)
         command = input(colored("\nType a valid command... ", "green"))
@@ -275,15 +422,8 @@ class game:
                 game.equip(command2[1], data)
                 command = ""
 
-            elif command.lower() == "exit":
-                print(colored("Exiting game...","red"))
-                exit()
-            
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
@@ -339,10 +479,7 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
@@ -411,10 +548,7 @@ class game:
                 print("\nYou leave the village and start walking to the watchtower.")
 
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
@@ -499,10 +633,7 @@ class game:
                 command = ""
             
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
@@ -558,10 +689,7 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
@@ -640,10 +768,7 @@ class game:
                 command = ""
 
             elif command.lower() == "save":
-                print(colored("\nSaving game...", "red"))
-                game.WriteJson(data)
-                time.sleep(0.5)
-                print(colored("\nSaved Game!", "red"))
+                game.save(data)
                 command = ""
             
             elif command.lower() == "exit":
