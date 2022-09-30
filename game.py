@@ -930,6 +930,7 @@ class game:
         data["Room"] = 9
         game.WriteJson(data)
         print("\n You have arrived at a large clifside made of ice.")
+        command = input(colored("\n Type a valid command... ", "green"))
         finish = False
         while finish == False:
             if command.lower() == "help":
@@ -942,6 +943,46 @@ class game:
                 
             elif command.lower() == "character":
                 game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("You see a large clifside made of ice.")
+                print("After inspecting the cliffside you feel confident thast you can climb it.")
+                command = ""
+            
+            elif command.lower() == "checkout cliffside":
+                print('''
+                                 ┌─────┐
+                                 │ TOP │
+                                 └┬────┘
+                                  │
+                                  │
+                                  │         ┌─┐
+                   ┌─┐            │ ┌───────┤J│
+                   │K├────────┐   │ │       └┬┘
+                   └┬┘        │   │ │        │
+                    │         │   │ │        │
+                    │         │   │ │        │
+                    │        ┌┴┬──┘ │       ┌┴┐
+                    │        │I│    │       │G├─────┐
+                    │        └┬┘    │       └┬┘     │
+                    │         │     │        │     ┌┴┐
+                    │         │     │        │     │H│
+                    │         │     │ ┌──────┘     └─┘
+                    │         │    ┌┴┬┤       ┌─┐
+                    │         └────┤E├┴───────┤F│
+                    │    ┌─┐       └┬┘        └┬┘
+                    │  ┌─┤C│        │          │
+                    │  │ └─┤        │          │
+                    │  │   │       ┌┴┐        ┌┴┐
+                    │  │   └───────┤B├────────┤D│
+                    │  │           └┬┘        └─┘
+                    │  │            │
+                    │  │            │
+                    │  └─────┬─┬────┘
+                    │        │A│
+                    └────────┴─┘
+                    ''')
                 command = ""
             
             elif command.__contains__("equip") or command.__contains__("EQUIP"):
