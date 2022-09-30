@@ -59,7 +59,30 @@ class game:
                         data["Inventory"][e] = 0
                         print("You have equipped the", e)
                         game.WriteJson(data)
-                        
+    
+    def food(info, data):
+        file = open("game.json", "r")
+        food = json.load(file)
+        e = info
+        for item in food:
+            if "Inventory" in item:
+                for item2 in food["Inventory"]:
+                    if info in item2:
+                        if e == "Bread" and data["Inventory"][e] > 0:
+                            data["Character"]["Food"] += 20
+                            data["Inventory"][e] -= 1
+                            print("You have eaten", e)
+                            game.WriteJson(data)
+                        elif e == "DriedMeat" and data["Inventory"][e] > 0:
+                            data["Character"]["Food"] += 30
+                            data["Inventory"][e] -= 1
+                            print("You have eaten", e)
+                            game.WriteJson(data)
+                        elif e == "Meat" and data["Inventory"][e] > 0:
+                            data["Character"]["Food"] += 40
+                            data["Inventory"][e] -= 1
+                            print("You have eaten", e)
+                            game.WriteJson(data)
                         
     def LoadRoom(data):
         if data["Room"] == 0:
@@ -881,6 +904,10 @@ class game:
                 game.equip(command2[1], data)
                 command = ""
             
+            elif command.__contains__("eat") or command.__contains__("EAT"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
 
             elif command.lower() == "save":
                 command = ""
@@ -902,6 +929,43 @@ class game:
     def room9(data):
         data["Room"] = 9
         game.WriteJson(data)
+        print("\n You have arrived at a large clifside made of ice.")
+        finish = False
+        while finish == False:
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("eat") or command.__contains__("EAT"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+
+            elif command.lower() == "save":
+                command = ""
+                game.save(data)
+                
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\n Type a valid command... ", "green"))
+
 
     def room10(data):
         data["Room"] = 10
