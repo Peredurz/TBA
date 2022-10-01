@@ -932,26 +932,7 @@ class game:
         print("\n You have arrived at a large clifside made of ice.")
         command = input(colored("\n Type a valid command... ", "green"))
         finish = False
-        while finish == False:
-            if command.lower() == "help":
-                game.help()
-                command = ""
-                
-            elif command.lower() == "inventory":
-                game.PrintInventory(data)
-                command = ""
-                
-            elif command.lower() == "character":
-                game.PrintCharacter(data)
-                command = ""
-            
-            elif command.lower() == "look":
-                print("You see a large clifside made of ice.")
-                print("After inspecting the cliffside you feel confident thast you can climb it.")
-                command = ""
-            
-            elif command.lower() == "checkout cliffside":
-                print('''
+        route = '''
                                  ┌─────┐
                                  │ TOP ├─────┐
                                  └┬────┘     │  
@@ -982,7 +963,183 @@ class game:
                     │  └─────┬─┬────┘
                     │        │A│
                     └────────┴─┘
-                    ''')
+                              X
+                    '''
+        while finish == False:
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower() == "look":
+                print("You see a large clifside made of ice.")
+                print("After inspecting the cliffside you feel confident thast you can climb it.")
+                command = ""
+            
+            elif command.lower() == "checkout cliffside":
+                print(route)
+                climb = input(colored("Do you want to climb the cliffside? (YES or NO) ", "green"))
+                if climb.lower() == "yes":
+                    print("When climbing your position will be indicated by the letter X.")
+                    top = False
+                    positie = "Begin"
+                    keuze = input("Choose the letter that is connected to the letter you are standing on, \nbut watch out some choices make you fall down... ")
+                    while top == False:
+                        if keuze.lower() == "a":
+                            if positie == "Begin" or positie == "B":
+                                route = route.replace("X", positie)
+                                route = route.replace("A", "X")
+                                positie = "A"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to A")
+                            keuze = ""
+                        elif keuze.lower() == "b":
+                            if positie == "A" or positie == "D" or positie == "E":
+                                route = route.replace("X", positie)
+                                route = route.replace("B" , "X")
+                                route = route.replace("Xegin", "Begin")
+                                positie = "B"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to B")
+                            keuze = ""
+                        elif keuze.lower() == "c":
+                            if positie == "B":
+                                route = route.replace("X", positie)
+                                route = route.replace("C", "X")
+                                positie = "C"
+                                print(route)
+                                print("\nYou notice that C is the wrong choice and you fall down to A.")
+                                route = route.replace("X", positie)
+                                route = route.replace("A", "X")
+                                positie = "A"
+                                print(route)
+                            elif positie == "A":
+                                print("\nC is a slippery slope so you can't climb it via this route.")
+                            else:
+                                print("\nYou are not on a place that is connected to C")
+                            keuze = ""
+                        elif keuze.lower() == "d":
+                            if positie == "B":
+                                route = route.replace("X", positie)
+                                route = route.replace("D", "X")
+                                positie = "D"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to D")
+                            keuze = ""
+                        elif keuze.lower() == "e":
+                            if positie == "B" or positie == "G" or positie == "I":
+                                route = route.replace("X", positie)
+                                route = route.replace("E", "X")
+                                positie = "E"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to E")
+                            keuze = ""
+                        elif keuze.lower() == "f":
+                            if positie == "E":
+                                route = route.replace("X", positie)
+                                route = route.replace("F", "X")
+                                positie = "F"
+                                print(route)
+                                print("\nYou notice that F is the wrong choice and you fall down to D.")
+                                route = route.replace("X", positie)
+                                route = route.replace("D", "X")
+                                positie = "D"
+                                print(route)
+                            elif positie == "D":
+                                print("\nYou notice that F is a slippery slope so you can't climb it via this route.")
+                            else:
+                                print("\nYou are not on a place that is connected to F")
+                            keuze = ""
+                        elif keuze.lower() == "g":
+                            if positie == "E" or positie == "I" or positie == "H":
+                                route = route.replace("X", positie)
+                                route = route.replace("G", "X")
+                                positie = "G"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to G")
+                            keuze = ""
+                        elif keuze.lower() == "h":
+                            if positie == "G":
+                                route = route.replace("X", positie)
+                                route = route.replace("H", "X")
+                                positie = "H"
+                                print(route)
+                                vraag = input("\nDo you want to enter the secret cave? (YES or NO)")
+                                if vraag.lower() == "yes":
+                                    pass
+                                    #secret cave
+                                else:
+                                    print("\nYou choose not to enter the cave.")
+                            else:
+                                print("\nYou are not on a place that is connected to H")
+                            keuze = ""
+                        elif keuze.lower() == "i":
+                            if positie == "TOP" or positie == "E":
+                                route = route.replace("X", positie)
+                                route = route.replace("I", "X")
+                                positie = "I"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to I.")
+                            keuze = ""
+                        elif keuze.lower() == "j":
+                            if positie == "G" or positie == "TOP":
+                                route = route.replace("X", positie)
+                                route = route.replace("I", "X")
+                                positie = "I"
+                                print(route)
+                                print("\nYou notice that I is the wrong choice and you fall down to E.")
+                                route = route.replace("X", positie)
+                                route = route.replace("E", "X")
+                                positie = "E"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to I")
+                            keuze = ""
+                        elif keuze.lower() == "k":
+                            if positie == "I":
+                                route = route.replace("X", positie)
+                                route = route.replace("K", "X")
+                                positie = "K"
+                                print(route)
+                                print("\nYou notice that K is the wrong choice and you fall down to G.")
+                                route = route.replace("X", positie)
+                                route = route.replace("A", "X")
+                                positie = "A"
+                                print(route)
+                            elif positie == "A":
+                                print("\nThe route to K is a slippery slope so you can't climb it via this route.")
+                            else:
+                                print("\nYou are not on a place that is connected to K")
+                            keuze = ""
+                        elif keuze.lower() == "top":
+                            if positie == "I":
+                                route = route.replace("X", positie)
+                                route = route.replace("TOP", " X ")
+                                positie = "TOP"
+                                print(route)
+                            else:
+                                print("\nYou are not on a place that is connected to TOP")
+                            keuze = ""
+                            top = True
+                        else:
+                            keuze = input("\nChoose the letter that is connected to the letter you are standing on, \nbut watch out some choices make you fall down... ")
+                    print("\nYou have reached the top of the icy cliff.")
+                    finish = True
+                elif climb.lower() == "no":
+                    print("You have chosen not to climb the cliff.")
                 command = ""
             
             elif command.__contains__("equip") or command.__contains__("EQUIP"):
@@ -1006,6 +1163,8 @@ class game:
 
             else:
                 command = input(colored("\n Type a valid command... ", "green"))
+        print("You are going to the next room...")
+        game.room10(data)
 
 
     def room10(data):
