@@ -4,7 +4,7 @@ from termcolor import colored
 import random
 from playsound import playsound
 #https://pypi.org/project/termcolor/ voor meer kleur en text info
-
+#https://asciiflow.com/ om puzzel met ascii te tekenen
 class game:
     #print(data["Character"]["hp"]) als we iets uit de jsonfile uit willen printen
     #data["Character"]["hp"] = 90 #zo pas je dingen aan
@@ -47,6 +47,7 @@ class game:
                   
         game.WriteJson(data)
 
+    #Functie om items te equippen
     def equip(info, data):
         file = open("game.json", "r")
         items = json.load(file)
@@ -60,6 +61,7 @@ class game:
                         print("You have equipped the", e)
                         game.WriteJson(data)
     
+    #Functie om voedsel te consumeren
     def food(info, data):
         file = open("game.json", "r")
         food = json.load(file)
@@ -83,7 +85,9 @@ class game:
                             data["Inventory"][e] -= 1
                             print("You have eaten", e)
                             game.WriteJson(data)
-                        
+    
+    #Als je verder wil gaan met het spel op de laatste plek waar je was
+    #dan wordt deze functie aangeroepen.
     def LoadRoom(data):
         if data["Room"] == 0:
             print(colored("No savegame, starting new game","red"))
@@ -119,7 +123,8 @@ class game:
             game.room9(data)
         elif data["Room"] == 10:
             game.room10(data)
-                        
+
+    #functie waarmee je het spel kan opslaan via een json file               
     def save(data):
         print(colored("\nSaving game...", "red"))
         game.WriteJson(data)
@@ -128,7 +133,7 @@ class game:
         game.LoadRoom(data)
         
 
-
+    #Functie dat wordt aangeroepen als je help schrijft
     def help():
         print("HELP: \n")
         print("You can write different commands to look around the room")
@@ -143,7 +148,6 @@ class game:
         print("TALK: to talk to a character")
         print("PICKUP: to pick up an item")
         print("EQUIP: to equip an item")
-        print("USE: to use an item")
         print("SAVE: to save the game")
         print("EXIT: to exit the game")
         print("HELP: to see this menu again")
@@ -171,7 +175,7 @@ class game:
             
           
         
-    
+    #De functie die in het begin wordt aangeroepen om het verhaal te starten
     def Pre_Game_Story(data):
         print(colored("You can write different commands to look around the room (Write HELP for more info WHEN ASKED FOR A COMMAND)...","red",attrs=['bold','underline']))	
         print("\nYou suddenly wake up with the worst headache you have ever had.")
@@ -368,8 +372,6 @@ class game:
                 data["Inventory"]["Shoes"] = 1
                 game.WriteJson(data)
                 command = ""
-                    
-
             
             elif command.__contains__("equip") or command.__contains__("EQUIP"):
                 command2 = command.split()
@@ -398,13 +400,7 @@ class game:
             print(colored("\nYou further on the path and eventually arrive at a steep stone cliff.... ","grey"))
             game.room3(data)
     
-    
-    
-    
-    
-    
-    
-    
+    #DEe eerste opstakel waar je tegen aan loopt, en je omhoog klimt
     def room3(data):
         data["Room"] = 3
         game.WriteJson(data)
@@ -476,7 +472,7 @@ class game:
                 command = input(colored("\nType a valid command... ","green"))
         game.room4(data)
         
-
+    #Geheime cave in de eerste muur waar je langs moet klimmen
     def subroom3(data):
         data["Room"] = 3.5
         game.WriteJson(data)
@@ -538,7 +534,7 @@ class game:
         data["Room"] = 4
         game.WriteJson(data)
         
-    
+    #Het bergdorpje
     def room5(data):
         data["Room"] = 5
         game.WriteJson(data)
@@ -608,6 +604,7 @@ class game:
         print("\nYou leave the village and start walking to the watchtower.")
         game.room6(data)
 
+    #De bar in het hotel bergdorpje
     def subroom5_1(data):
         data["Room"] = 5.1
         game.WriteJson(data)
@@ -692,6 +689,7 @@ class game:
                 command = input(colored("\n Type a valid command... ", "green"))
         game.room5()
 
+    #Het hotel in het bergdorpje
     def subroom5_2(data):
         data["Room"] = 5.2
         game.WriteJson(data)
@@ -749,6 +747,7 @@ class game:
                 command = input(colored("\n Type a valid command... ", "green"))
         game.room5()
 
+    #De winkel in het bergdorpje
     def subroom5_3(data):
         data["Room"] = 5.3
         game.WriteJson(data)
@@ -833,6 +832,7 @@ class game:
         data["Room"] = 6
         game.WriteJson(data)
 
+    #Ruimte 7 waar je een puzzel met morsecode moet oplossen om de brug te laten komen en door te kunnen gaan naar de volgende ruimte.
     def room7(data):
         data["Room"] = 7
         game.WriteJson(data)
@@ -857,7 +857,7 @@ class game:
                 game.PrintCharacter(data)
                 command = ""
 
-            elif command.lower() == "checkout pedestal":
+            elif command.lower() == "check pedestal":
                 print("It seems that you should look for clues in your surrounding area to write the correct sentence.")
                 print("A bridge to the other side of the canyon will appear when you write the correct sentence.")
                 code = input("What is the correct sentence? ")
@@ -878,24 +878,24 @@ class game:
                 print("And there is a bridge on the other side of the canyon.")
                 command = ""
             
-            elif command.lower() == "checkout tree":
+            elif command.lower() == "check tree":
                 print("This tree seems to have a conversion table for morse code.")
                 for key, value in morsecode.items():
                     print(" ",key, value, end="")
                 command = ""
 
-            elif command.lower() == "checkout boulder":
+            elif command.lower() == "check boulder":
                 print("This boulder seems to have a message in some morse code.")
                 print("Maybe I can find a conversion table for it.")
                 print("--- .--. . -. / ... . ... .- -- .")
                 playsound('./' + 'morse.wav')
                 command = ""
             
-            elif command.lower() == "checkout bushes":
+            elif command.lower() == "check bushes":
                 print("There seems nothing wrong with the bushes.")
                 command = ""
             
-            elif command.lower() == "checkout canyon":
+            elif command.lower() == "check canyon":
                 print("The canyon is very big, but you can see a bridge on the other side.")
                 command = ""
             
@@ -926,6 +926,8 @@ class game:
         data["Room"] = 8
         game.WriteJson(data)
 
+
+    #Ruimte 9 waar je door middel van een puzzel een ijsklif omhoog moet klimmen
     def room9(data):
         data["Room"] = 9
         game.WriteJson(data)
@@ -964,7 +966,7 @@ class game:
                     │        │A│
                     └────────┴─┘
                               X
-                    '''
+                    '''#Dit is voor de snakes and ladders puzzel
         while finish == False:
             if command.lower() == "help":
                 game.help()
@@ -983,7 +985,7 @@ class game:
                 print("After inspecting the cliffside you feel confident thast you can climb it.")
                 command = ""
             
-            elif command.lower() == "checkout cliffside":
+            elif command.lower() == "check cliffside":#Dit is voor de snakes and ladders puzzel
                 print(route)
                 climb = input(colored("Do you want to climb the cliffside? (YES or NO) ", "green"))
                 if climb.lower() == "yes":
@@ -1076,10 +1078,13 @@ class game:
                                 route = route.replace("H", "X")
                                 positie = "H"
                                 print(route)
-                                vraag = input("\nDo you want to enter the secret cave? (YES or NO)")
+                                vraag = input("\nDo you want to check the crack in the wall? (YES or NO)")
                                 if vraag.lower() == "yes":
-                                    pass
-                                    #secret cave
+                                    print("You check the secret crack in the wall.")
+                                    print("To your surprise you find an iron sword and Iron armor.")
+                                    data["Inventory"]["IronSword"] = 1
+                                    data["Inventory"]["IronArmor"] = 1
+                                    game.WriteJson(data)
                                 else:
                                     print("\nYou choose not to enter the cave.")
                             else:
@@ -1165,7 +1170,6 @@ class game:
                 command = input(colored("\n Type a valid command... ", "green"))
         print("You are going to the next room...")
         game.room10(data)
-
 
     def room10(data):
         data["Room"] = 10
