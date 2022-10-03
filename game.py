@@ -1902,6 +1902,7 @@ class game:
                                 playcommand = ""
                         else:
                             playcommand = input(colored("Type a valid command or letter: ", "green"))
+                            
                     if CompletedPuzzle != True:
                         print(colored("\nYou have stopped guessing, you may now look for clues in the rooms.", "grey"))           
                         pass
