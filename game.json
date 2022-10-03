@@ -1,25 +1,80 @@
 {
   "Character": {
     "Hp": 100,
-    "Food": 120,
-    "WinterClothes": 0,
-    "Shoes": 0
+    "Food": 100
   },
   "Inventory": {
-    "GoldCoins": 0,
-    "SilverCoins": 0,
-    "BronzeCoins": 0,
-    "Bread": 1,
-    "Meat": 3,
-    "DriedMeat": 0,
-    "Water": 4,
-    "Wood": 0,
-    "WinterClothes": 0,
-    "Shoes": 0,
-    "RustySword": 0,
-    "OldHelmet": 0,
-    "ClimbingPicks": 0,
-    "Rope": 0
+    "Coins": {
+      "info": "Coins are the used currency in this land.",
+      "amount": 0
+    },
+    "Bread": {
+      "info": "Bread is used to restore hunger/food with a small amount.",
+      "amount": 0
+    },
+    "Meat": {
+      "info": "Meat is used to restore hunger/food with a larger amount than bread.",
+      "amount": 0
+    },
+    "DriedMeat": {
+      "info": "Dried meat is used to restore a large portion of hunger.",
+      "amount": 0
+    },
+    "Water": {
+      "info": "Water is used to clensh thirst.",
+      "amount": 0
+    },
+    "Wood": {
+      "info": "This can be used to create fire.",
+      "amount": 0
+    },
+    "WinterClothes": {
+      "info": "WinterClothes protect u from the cold.",
+      "amount": 1,
+      "equipped": false
+    },
+    "Shoes": {
+      "info": "Shoes will protect your feet from getting hurt.",
+      "amount": 0,
+      "equipped": false
+    },
+    "RustySword": {
+      "info": "This sword is old and rusty, but it will do more damage than fighting with your bare fists.",
+      "amount": 0,
+      "equipped": false
+    },
+    "OldHelmet": {
+      "info": "This helmet is old and rusty, but it will protect you from small blws to the head.\n On the outside is a logo engraved that looks like a eagle holding a sword and on the inside u can see the letters: DEHSR.",
+      "amount": 0,
+      "Code": "DEHSR",
+      "equipped": false
+    },
+    "ClimbingPicks": {
+      "info": "These ClimbingPicks can be used to scale steep walls or cliffs.",
+      "amount": 0,
+      "equipped": false
+    },
+    "OldBow": {
+      "info": "This could be usefull from a distance",
+      "amount": 0,
+      "equipped": false
+    },
+    "Rope": {
+      "info": "This is a piece of rope that might come in handy.",
+      "amount": 0
+    },
+    "Herbs": {
+      "info": "These herbs can be used to automatically craft healing potions at fights.",
+      "amount": 0
+    },
+    "Medicine": {
+      "info": "This will heal any damage done to you.",
+      "amount": 0
+    },
+    "Encyclopedia":{
+      "info": "On your travels through the mountain you can find yourself facing lots of enemies and monsters.\n You should watch out for Skeletons which have between 100 and 200 HP.\n Wendigo is also a very dangerous monster that you can come across, its weakness is fire.\n At the top of the mountain you also have a boss monster with an HP of 500.\n You should also collect as much herbs as you can, because you can heal yourself wit it.",
+      "amount": 0
+    }
   },
-  "Room": 9
+  "Room": 1
 }
