@@ -51,8 +51,7 @@ class game:
             data["Inventory"][value]["amount"] = 0
             if "equipped" in data["Inventory"][value]:
                 data["Inventory"][value]["equipped"] = False
-            
-            
+             
         data["Room"] = 0
                   
         game.WriteJson(data)
