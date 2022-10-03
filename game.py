@@ -1822,10 +1822,10 @@ class game:
 
         print(colored("\nYou enter a big hallway with a floating orb in the middle, when you approach it it talks to you:\n", "green"))
         print(colored(f"Hello there {name}, I am the orb of knowledge, I will only let you through the door if u guess the word correctly.\nYou only have {turnsleft} guesses before I reset you to the beginning of your adventure, so choose wisely.", "blue"))
-        print(colored("You can find clues about the word in the 3 rooms behind u.\n", "blue"))
+        print(colored("You can find clues about the word in the room behind u.\n", "blue"))
         print(colored("Good luck!", "blue"))
         
-        print(colored("To enter the rooms use the 'go' command with: room1, room2 or room3","grey"))
+        print(colored("To enter the rooms use the 'go' command with: room","grey"))
         print(colored("To play the game type: play, if u want to stop playing and look around in the rooms use the commands abouve and in the HELP function","grey"))
         
         GuessWordSentence = "The smartest gamer was born today"
@@ -1861,7 +1861,9 @@ class game:
                 game.CheckThings(data, command2[1])
                 command = ""
                 
- 
+            elif command.lower() == "go room":
+                game.subroom10_1(data)
+                command = ""
 
             elif command.lower() == "play":
                 #hangman code
