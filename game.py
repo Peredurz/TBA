@@ -1,5 +1,6 @@
 import json
 import time
+from traceback import print_stack
 from termcolor import colored
 import random
 from playsound import playsound
@@ -26,7 +27,7 @@ class game:
         print("\nInventory: \n")
         for item in data["Inventory"]:
             print(item, ":", data["Inventory"][item]["amount"])
-            
+        print()    
             
 
     
@@ -143,7 +144,7 @@ class game:
             damage = 5
         while enemyhp > 0 :
             print(f"The {enemy} has {enemyhp} hp left and you have {data['Character']['Hp']} hp left")
-            if gevecht.lower() == "Attack":
+            if gevecht.lower() == "attack":
                 rand = random.randrange(1, 3)
                 if rand == 2:
                     print("You have succesfully attacked")
@@ -153,7 +154,7 @@ class game:
                     print("You have failed to attack")
                     data["Character"]["Hp"] -= 10
                 gevecht = ""
-            elif gevecht.lower() == "Defend":
+            elif gevecht.lower() == "defend":
                 rand = random.randrange(1, 3)
                 if rand == 2:
                     print("You have succesfully defended")
@@ -181,9 +182,13 @@ class game:
             else:
                 data["Character"]["Hp"] -= 10
                 gevecht = input(colored("Attack, Defend or Heal?","red"))
-        if enemyhp <= 0:
+        if enemyhp <= 0 and enemy != "Boss":
             print("You have defeated the", enemy)
             game.LoadRoom(data)
+        elif enemyhp <= 0 and enemy == "Boss":
+            print("You have defeated the", enemy)
+            print("You have won the game")
+            game.EndScreen(data)
     
     #Als je verder wil gaan met het spel op de laatste plek waar je was
     #dan wordt deze functie aangeroepen.
@@ -226,6 +231,11 @@ class game:
             game.room9(data)
         elif data["Room"] == 10:
             game.room10(data)
+        elif data["Room"] == 10.1:
+            game.subroom10_1(data)
+
+        else:
+            game.roomboss(data)
 
     #functie waarmee je het spel kan opslaan via een json file               
     def save(data):
@@ -282,7 +292,10 @@ class game:
         
     #De functie die in het begin wordt aangeroepen om het verhaal te starten
     def Pre_Game_Story(data):
-        print(colored("You can write different commands to look around the room (Write HELP for more info WHEN ASKED FOR A COMMAND)...","red",attrs=['bold','underline']))	
+        print(colored("You can write different commands to look around the room (Write HELP for more info WHEN ASKED FOR A COMMAND)...","red",attrs=['bold','underline']))
+        data["Character"]["Name"] = input(colored("What is the name you want to give your character? ","green"))	
+        game.WriteJson(data)
+        
         print("\nYou suddenly wake up with the worst headache you have ever had.")
         print("You don't know where you are and you don't know how you got here.")
         print("You only know that you want to climb the mountain and slay the boss.")
@@ -1804,9 +1817,309 @@ class game:
     def room10(data):
         data["Room"] = 10
         game.WriteJson(data)
+        name = data["Character"]["Name"]
+        turnsleft = 8
 
+        print(colored("\nYou enter a big hallway with a floating orb in the middle, when you approach it it talks to you:\n", "green"))
+        print(colored(f"Hello there {name}, I am the orb of knowledge, I will only let you through the door if u guess the word correctly.\nYou only have {turnsleft} guesses before I reset you to the beginning of your adventure, so choose wisely.", "blue"))
+        print(colored("You can find clues about the word in the 3 rooms behind u.\n", "blue"))
+        print(colored("Good luck!", "blue"))
+        
+        print(colored("To enter the rooms use the 'go' command with: room1, room2 or room3","grey"))
+        print(colored("To play the game type: play, if u want to stop playing and look around in the rooms use the commands abouve and in the HELP function","grey"))
+        
+        GuessWordSentence = "The smartest gamer was born today"
+        GuessStringList = list(GuessWordSentence)
+        printstring = ""
+        for i in range(len(GuessStringList)):
+            if GuessStringList[i] != " ":
+                printstring += "."
+            else:
+                printstring += "-"
+                
+        
+        CompletedPuzzle = False
+        
+        
+        command = input(colored("\nType a valid command... ", "green"))        
+        while command.lower() != "go back" and CompletedPuzzle == False:
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
 
+            elif command.lower().__contains__("inspect"):
+                command2 = command.split()
+                game.CheckThings(data, command2[1])
+                command = ""
+                
+ 
 
+            elif command.lower() == "play":
+                #hangman code
+                print(printstring)
+                if turnsleft != 0:
+                    playcommand = input(colored("\n Type a letter, or type 'guess word' to guess the complete sentence. type 'stop' to stop guessing look for clues.\n'-' signifies a space character.\nType now:", "green"))
+                    while playcommand.lower() != "stop":
+                        
+                        if playcommand.lower() == "guess sentence" or playcommand.lower() == "guess word":
+                            guess = input(colored("\nType the sentence you think is the correct answer. ", "green"))
+                            if guess.lower() == GuessWordSentence.lower():
+                                print(colored("\nYou guessed the sentence correctly, you may pass.", "grey"))
+                                CompletedPuzzle = True
+                                break
+                            else:
+                                print(colored("\nYou guessed the sentence wrong, try again.", "green"))
+                                turnsleft -= 1
+                                print(f"{turnsleft} turns left.")	
+                                playcommand = ""
+                        
+                        elif len(playcommand.lower()) == 1:
+                            if playcommand.lower() in GuessStringList:
+                                
+                                for i in range(len(GuessStringList)):
+                                    
+                                    if GuessStringList[i].lower() == playcommand.lower():
+                                        printstring = printstring[:i] + GuessStringList[i] + printstring[i+1:]
+                                print(colored("\nYou guessed a letter correctly, try again.", "green"))
+                                print(colored("\n" + printstring, "white"))
+                                playcommand = ""
+                                
+                            else:
+                                print(colored("\nYou guessed the letter wrong, try again.", "green"))
+                                turnsleft -= 1
+                                print(f"{turnsleft} turns left.")
+                                playcommand = ""
+                        else:
+                            playcommand = input(colored("Type a valid command or letter: ", "green"))
+                    if CompletedPuzzle != True:
+                        print(colored("\nYou have stopped guessing, you may now look for clues in the rooms.", "grey"))           
+                        pass
+                    else:
+                        pass
+                else:
+                    print(colored("\nYou have no more guesses left, you have to start over.", "red"))
+                    break
+                       
+                command = ""
+            
+            
+            elif command.__contains__("unequip") or command.__contains__("UNEQUIP"):
+                command2 = command.split()
+                game.unequip(command2[1], data)
+                command = ""
+
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("eat") or command.__contains__("EAT"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("drink") or command.__contains__("DRINK"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+
+            elif command.lower() == "save":
+                command = ""
+                game.save(data)
+                
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\nType a valid command... ", "green"))
+                
+        if CompletedPuzzle == True:
+            print("You are going to the next room...")
+            game.roomboss(data)
+        elif command.lower() == "go back":
+            print("You are going back to the last room...")
+            game.room9(data)
+        else:
+            game.room1(data)
+    
+    
+    
+    
+    def subroom10_1(data):
+        data["Room"] = 10.1
+        game.WriteJson(data)
+        
+        print(colored("You enter a room with a big bookshelf, you see a book with the title 'The smartest gamer; the life óf' on it.\nYou also see a big painting.\nYou also see a calendar.", "white"))
+        
+        Painting = """
+ ┌─────────────────────────────────────────────────────────────────────────┐
+ │┼───────────────────────────────────────────────────────────────────────┼│
+ ││                                                                       ││
+ ││                                                                       ││
+ ││          ,███████,                                                    ││
+ ││                                                                       ││
+ ││         █████████▌                                                    ││
+ ││                                                                       ││
+ ││         ██████████                                                    ││
+ ││                                                                       ││
+ ││         ██████████▀                                                   ││
+ ││                                                                       ││
+ ││          █████████                                                    ││
+ ││                                                                       ││
+ ││        ,████████`                                                     ││
+ ││                                                                       ││
+ ││  ╓█   █████████▌                                      ,▀              ││
+ ││                                                                       ││
+ ││  ████████████████,                                   ,▀               ││
+ ││                                                                       ││
+ ││   ████████████████╕                                 ╒▀                ││
+ ││                                                                       ││
+ ││   ╘████████████████                                ,▌                 ││
+ ││                                                                       ││
+ ││    ████████████████▌          ,╓█████             ╒▌     █████        ││
+ ││                                                                       ││
+ ││     ▀█████████████████████████████▀▀██▌          ╒█      ████▌╛       ││
+ ││                                                                       ││
+ ││      █████████████████████▀███████████████████████████████████████    ││
+ ││                                                                       ││
+ ││      ███████████████████,█─»« ▓▓▓ ▓▓ ▓▓ ▓▓ ▓██████████████████████    ││
+ ││                                                                       ││
+ ││     ╒██████████████████████████████  "*⌐│  ' ] ▀██████████████████    ││
+ ││                                                                       ││
+ ││     ██████████████████████████████████`     `  ███████████████████    ││
+ ││                                                                       ││
+ ││     ███████████████████████████████████        j██████████████████    ││
+ ││                                                                       ││
+ ││     ███▌ █████████████████████████████▌        j██████████████████    ││
+ ││                                                                       ││
+ ││     █▌ ███████████████████████████████         j██████████████████    ││
+ ││                                                                       ││
+ ││     ▀█████████████████████████████████         j██████████████████    ││
+ ││                                                                       ││
+ ││         ██▀█▀▀▀▀▀██▀███`    .█████████         j██████████████████    ││
+ ││                                                                       ││
+ ││                  ██         █████████          j██████████████████    ││
+ ││                                                                       ││
+ ││                  ███        ████████           j██████████████████    ││
+ ││                                                                       ││
+ ││                  ███       █████████           j██████████████████    ││
+ ││                                                                       ││
+ ││                 ████      ██████████           j██████████████████    ││
+ ││                                                                       ││
+ ││        ,██████████████████████████████         j██████████████████    ││
+ ││                                                                       ││
+ ││       ███ ███  ███████  ██████████████████,    j██████████████████    ││
+ ││                                                                       ││
+ ││       ▀▀▌ ███           ██▌ ▀██    █▀██████    j██████████████████    ││
+ ││                                                                       ││
+ ││                                                                       ││
+ ││                                                                       ││
+ ││                                                                       ││
+ │┼───────────────────────────────────────────────────────────────────────┼│
+ └─────────────────────────────────────────────────────────────────────────┘
+"""
+        command = input(colored("\nType a valid command... ", "green"))
+        while command.lower() != "go back":
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+
+            elif command.lower().__contains__("inspect"):
+                command2 = command.split()
+                game.CheckThings(data, command2[1])
+                command = ""
+                
+            elif command.lower() == "check painting":
+                print(colored(Painting, "white"))
+                command = ""
+                
+            elif command.lower() == "check book":
+                data["Inventory"]["book"] = 1
+                game.WriteJson(data)
+                print(colored("The book tells a tale about a prophecy of a gamer to come: the one to defeat the boss and finally free the world of its wrath", "white"))
+                print(colored("to read the book use the inventory commands", "grey"))
+                command = ""
+            
+            elif command.lower() == "check calendar":
+                ClueString = colored("The calendar looks really old and after turning the pages u see a red circle around a date...", "white")
+                ClueString += colored(" today's date", "white", attrs=["bold", "underline"])	
+                print(ClueString)
+                command = ""               
+                
+                
+            elif command.__contains__("unequip") or command.__contains__("UNEQUIP"):
+                command2 = command.split()
+                game.unequip(command2[1], data)
+                command = ""
+
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("eat") or command.__contains__("EAT"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("drink") or command.__contains__("DRINK"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+
+            elif command.lower() == "save":
+                command = ""
+                game.save(data)
+                
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()   
+            else:
+                command = input(colored("\nType a valid command... ", "green"))
+                
+        
+        print("You are going back to the last room...")
+        game.room10(data)
+            
+    def roomboss(data):
+        data["Room"] = 11
+        game.WriteJson(data)
+        
+        print(colored("As you walk through the door it suddenly closes behind u.\nThe ground starts to shake as a Big and Ugly creature rises from the ground and starts to attack you.", "white"))
+        game.fight(data, "Boss")
+    
+    def EndScreen(data):
+        print(colored("The monster has finally been defeated and the world is free to live on in peace.","yellow"))
+        
+        
+        game.PrintCharacter(data)
+        game.PrintInventory(data)
+        
+        game.reset(data)
+        quit()
+            
+
+            
 
 
 game.start(game.data)

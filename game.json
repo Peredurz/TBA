@@ -1,5 +1,6 @@
 {
   "Character": {
+    "Name": "Karsten",
     "Hp": 100,
     "Food": 100
   },
@@ -30,7 +31,7 @@
     },
     "WinterClothes": {
       "info": "WinterClothes protect u from the cold.",
-      "amount": 1,
+      "amount": 0,
       "equipped": false
     },
     "Shoes": {
@@ -71,10 +72,14 @@
       "info": "This will heal any damage done to you.",
       "amount": 0
     },
-    "Encyclopedia":{
+    "Encyclopedia": {
       "info": "On your travels through the mountain you can find yourself facing lots of enemies and monsters.\n You should watch out for Skeletons which have between 100 and 200 HP.\n Wendigo is also a very dangerous monster that you can come across, its weakness is fire.\n At the top of the mountain you also have a boss monster with an HP of 500.\n You should also collect as much herbs as you can, because you can heal yourself wit it.",
+      "amount": 0
+    },
+    "Book": {
+      "info": "Once upon a time a person will be born smart enough to defeat the monster on the mountain and free the world.\nThe Chosen One will be the smartest person ever seen in this realm and will solve a lot of mysteries on its path.\nIt is a decendent of a long forgotten race: gamers, known for their wits and outbursts of anger.\nThis book is a prophecy that will come true one day.",
       "amount": 0
     }
   },
-  "Room": 1
+  "Room": 10
 }
