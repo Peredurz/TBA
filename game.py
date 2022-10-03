@@ -7,8 +7,7 @@ from playsound import playsound
 #https://asciiflow.com/ om puzzel met ascii te tekenen
 
 class game:
-    #print(data["Character"]["hp"]) als we iets uit de jsonfile uit willen printen
-    #data["Character"]["hp"] = 90 #zo pas je dingen aan
+
     
     def ReadJson():
         JsonFile = open("game.json", "r")
@@ -29,8 +28,7 @@ class game:
             print(item, ":", data["Inventory"][item]["amount"])
             
             
-        #result = '\n'.join(f'{key}: {key["info"]}' for key, value in data["Inventory"].items())
-        #print(result)
+
     
     def PrintCharacter(data):
         print("\nCharacter: \n")
@@ -989,6 +987,7 @@ class game:
             elif command.lower() == "buy room":
                 if (data["Inventory"]["Coins"]["amount"] - 500) < 0:
                     print("Insufficient funds.")
+                    
                 else:
                     print("You spend the night in a nice bed.")
                     data["Inventory"]["Coins"]["amount"] -= 500
