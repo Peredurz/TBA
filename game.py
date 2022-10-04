@@ -387,6 +387,11 @@ class game:
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
                 exit()
+            
+            elif command.lower() == "go further":
+                game.room2(data)
+            elif command.lower() == "go back":
+                print("Not able to go back")
        
             else:
                 command = input(colored("\nType a valid command... ","green"))
@@ -662,7 +667,10 @@ class game:
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
                 exit()
-
+            elif command.lower() == "go further":
+                game.room4(data)
+            elif command.lower() == "go back":
+                game.room2(data)
             else:
                 command = input(colored("\nType a valid command... ","green"))
         
@@ -1419,7 +1427,7 @@ class game:
                 
                 
     def subroom6_2(data):
-        data["Room"] = 6.1
+        data["Room"] = 6.2
         game.WriteJson(data)
         
         command = input(colored("\n Type a valid command... ", "green"))
@@ -1612,7 +1620,10 @@ class game:
             elif command.lower() == "exit":
                 print(colored("Exiting game...","red"))
                 exit()
-
+            elif command.lower() == "go further":
+                game.room9(data)
+            elif command.lower() == "go back":
+                game.room6(data)
             else:
                 command = input(colored("\n Type a valid command... ", "green"))
         game.room9(data)
@@ -1876,6 +1887,10 @@ class game:
                 print(colored("Exiting game...","red"))
                 exit()
 
+            elif command.lower() == "go further":
+                game.room10(data)
+            elif command.lower() == "go back":
+                game.room7(data)
             else:
                 command = input(colored("\n Type a valid command... ", "green"))
         print("You are going to the next room...")
