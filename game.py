@@ -774,6 +774,7 @@ class game:
     def room4(data):
         data["Room"] = 4
         game.WriteJson(data)
+        print("\nYou can search for herbs using: search herbs")
         command = input(colored("\n Type a valid command... ", "green"))
         while command.lower() != "go further" and command.lower() != "go back":
             command2 = command.split()
