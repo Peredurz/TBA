@@ -767,7 +767,7 @@ class game:
         data["Room"] = 4
         game.WriteJson(data)
         command = input(colored("\n Type a valid command... ", "green"))
-        while command.lower() != "go further":
+        while command.lower() != "go further" and command.lower() != "go back":
             command2 = command.split()
             command2[0] = command2[0].lower()
             
@@ -828,8 +828,10 @@ class game:
 
             else:
                 command = input(colored("\n Type a valid command... ", "green"))
-        
-        game.room5(data)
+        if command.lower() == "go further":
+            game.room5(data)
+        elif command.lower() == "go back":
+            game.room3(data)
         
         
     #Het bergdorpje
