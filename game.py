@@ -766,6 +766,71 @@ class game:
     def room4(data):
         data["Room"] = 4
         game.WriteJson(data)
+        command = input(colored("\n Type a valid command... ", "green"))
+        while command.lower() != "go further":
+            command2 = command.split()
+            command2[0] = command2[0].lower()
+            
+            if command.lower() == "help":
+                game.help()
+                command = ""
+                
+            elif command.lower() == "inventory":
+                game.PrintInventory(data)
+                command = ""
+                
+            elif command.lower() == "character":
+                game.PrintCharacter(data)
+                command = ""
+            
+            elif command.lower().__contains__("inspect"):
+                command2 = command.split()
+                game.CheckThings(data, command2[1])
+                command = ""
+            
+            elif command.__contains__("unequip") or command.__contains__("UNEQUIP"):
+                command2 = command.split()
+                game.unequip(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("equip") or command.__contains__("EQUIP"):
+                command2 = command.split()
+                game.equip(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("eat") or command.__contains__("EAT"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+            
+            elif command.__contains__("drink") or command.__contains__("DRINK"):
+                command2 = command.split()
+                game.food(command2[1], data)
+                command = ""
+                
+            elif command.lower() == "search herbs":
+                timeToSeek = input(" How long do you want to search for herbs? (1-10) ")
+                for i in range(int(timeToSeek)):
+                    print("Searching for herbs...")
+                    randomHerbNumber = random.randrange(0, 11,2)
+                    data["Inventory"]["Herbs"]["amount"] += (randomHerbNumber*2)
+                    time.sleep(1)
+                command = ""
+            
+            elif command.lower() == "save":
+                command = ""
+                game.save(data)
+                
+            
+            elif command.lower() == "exit":
+                print(colored("Exiting game...","red"))
+                exit()
+
+            else:
+                command = input(colored("\n Type a valid command... ", "green"))
+        
+        game.room5(data)
+        
         
     #Het bergdorpje
     def room5(data):
@@ -1548,7 +1613,7 @@ class game:
 
             else:
                 command = input(colored("\n Type a valid command... ", "green"))
-        game.room8(data)
+        game.room9(data)
 
     def room8(data):
         data["Room"] = 8
